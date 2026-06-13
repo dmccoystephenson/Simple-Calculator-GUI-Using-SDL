@@ -35,6 +35,31 @@ g++ -std=c++17 simpleCalculator.cpp -o simpleCalculator $(pkg-config --cflags --
 g++ -std=c++17 testingParsing.cpp -o testingParsing
 ```
 
+### Windows (one-shot)
+
+On Windows, run the bundled script — it builds `simpleCalculator.exe` and
+launches it in one step:
+
+```bat
+build-and-run.bat
+```
+
+Double-click it in Explorer, or run it from a Command Prompt. It checks for
+`g++`, `pkg-config`, and SDL2/SDL2_image and prints the exact install command
+if anything is missing, then `cd`s to its own folder so the PNG assets load.
+
+It targets the MinGW-w64 toolchain (the same `g++` + `pkg-config` build as the
+Makefile). The easiest way to get that is [MSYS2](https://www.msys2.org/) —
+install the prerequisites once in an MSYS2 MinGW64 shell:
+
+```sh
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 \
+          mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-pkg-config
+```
+
+then add `C:\msys64\mingw64\bin` to your PATH (so both the compiler and the
+SDL runtime DLLs are found).
+
 ## Running
 
 ```sh
