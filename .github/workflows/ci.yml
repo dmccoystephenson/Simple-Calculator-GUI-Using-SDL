@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+jobs:
+  build:
+    name: Build & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install SDL2 dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsdl2-dev libsdl2-image-dev
+
+      # Builds both binaries via the project's Makefile — this is the first
+      # place simpleCalculator.cpp gets compiled and linked against SDL2.
+      - name: Build (Makefile)
+        run: make
+
+      # Runs the shunting-yard parser's assert-based self-tests. < /dev/null
+      # feeds EOF to the interactive prompt so the program exits cleanly; a
+      # failing assertion aborts with a non-zero status and fails the job.
+      - name: Run parser self-tests
+        run: ./testingParsing < /dev/null

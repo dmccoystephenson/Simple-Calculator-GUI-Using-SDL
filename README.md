@@ -1,5 +1,7 @@
 # Simple Calculator GUI (SDL)
 
+[![CI](https://github.com/dmccoystephenson/Simple-Calculator-GUI-Using-SDL/actions/workflows/ci.yml/badge.svg)](https://github.com/dmccoystephenson/Simple-Calculator-GUI-Using-SDL/actions/workflows/ci.yml)
+
 A small graphical calculator built with C++ and [SDL2](https://www.libsdl.org/),
 using SDL2_image to render PNG button textures. The interface presents digit and
 operator buttons that build up an equation string on screen.
