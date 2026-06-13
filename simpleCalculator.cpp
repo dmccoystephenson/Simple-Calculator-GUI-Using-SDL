@@ -11,13 +11,11 @@ using namespace std;
 void changeBackgroundColor(int r, int g, int b); // changes background color
 void changeDisplay(int id); // changes currently selected display to the button id textur
 void clearScreen();
-void changeDisplay(int id);
 void init();
 void loadMedia();
 void close();
 void handleButtonEvents(SDL_Event e);
 void displayButtonTextures();
-int parseEquation(string equation, int &result);
 
 // screen dimensions
 const int SCREEN_WIDTH = 750;
@@ -901,7 +899,7 @@ void init() {
 	SDL_Init(SDL_INIT_VIDEO);
 	
 	// create window
-	window = SDL_CreateWindow("SDL Practice - First Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("Simple Calculator", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	
 	// get window surface
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -1025,7 +1023,7 @@ void close() {
 	SDL_DestroyTexture(fiveT);
 	SDL_DestroyTexture(sixT);
 	SDL_DestroyTexture(sevenT);
-	SDL_DestroyTexture(eightT);;
+	SDL_DestroyTexture(eightT);
 	SDL_DestroyTexture(nineT);
 	SDL_DestroyTexture(zeroT);
 	SDL_DestroyTexture(plusSignT);
@@ -1034,9 +1032,9 @@ void close() {
 	SDL_DestroyTexture(clearT);
 	SDL_DestroyTexture(equalsT);
 	
-    // destroy window and renderer
-	SDL_DestroyWindow(window);
+    // destroy renderer and window (renderer first, per SDL convention)
 	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
     
     // exit SDL subystems
     IMG_Quit();
@@ -1079,7 +1077,7 @@ void displayButtonTextures() {
     seven.displayTexture();
     eight.displayTexture();
     nine.displayTexture();
-    zero.displayTexture();;
+    zero.displayTexture();
     plusSign.displayTexture();
     minusSign.displayTexture();
     multiply.displayTexture();
