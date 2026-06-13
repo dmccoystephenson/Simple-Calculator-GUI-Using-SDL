@@ -1,0 +1,9 @@
+# Compiled binaries / build artifacts
+*.exe
+*.o
+*.out
+a.out
+
+# Binaries produced by the Makefile (no extension)
+/simpleCalculator
+/testingParsing
