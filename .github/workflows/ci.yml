@@ -19,8 +19,10 @@ jobs:
 
       # Builds both binaries via the project's Makefile — this is the first
       # place simpleCalculator.cpp gets compiled and linked against SDL2.
+      # CI overrides CXXFLAGS to add -Werror so new warnings fail the build,
+      # while a local `make` stays non-fatal (Makefile keeps -Wall -Wextra).
       - name: Build (Makefile)
-        run: make
+        run: make CXXFLAGS="-std=c++17 -Wall -Wextra -Werror"
 
       # Runs the shunting-yard parser's assert-based self-tests. < /dev/null
       # feeds EOF to the interactive prompt so the program exits cleanly; a
