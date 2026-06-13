@@ -48,8 +48,7 @@ class Button {
 	int blue;
 	SDL_Texture* currentTexture;
 	int id;
-	int currentBroadcastingDisplay;
-	
+
 	Button() {
 		xpos = 0;
 		ypos = 0;

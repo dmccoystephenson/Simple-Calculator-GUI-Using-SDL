@@ -1,5 +1,5 @@
 CXX      = g++
-CXXFLAGS = -std=c++17
+CXXFLAGS = -std=c++17 -Wall -Wextra
 # SDL2 + SDL2_image flags (resolved via pkg-config)
 SDL_FLAGS = $(shell pkg-config --cflags --libs sdl2 SDL2_image)
 
