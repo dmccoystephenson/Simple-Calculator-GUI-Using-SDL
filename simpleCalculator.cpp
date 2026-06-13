@@ -48,8 +48,7 @@ class Button {
 	int blue;
 	SDL_Texture* currentTexture;
 	int id;
-	int currentBroadcastingDisplay;
-	
+
 	Button() {
 		xpos = 0;
 		ypos = 0;
@@ -1085,7 +1084,8 @@ void displayButtonTextures() {
     equalsSign.displayTexture();
 }
 
-int main(int argc, char* args[]) {
+// argc/argv are unnamed: SDL requires this signature, but the app uses neither
+int main(int, char*[]) {
     init();
     
     loadMedia();
