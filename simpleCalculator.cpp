@@ -43,9 +43,6 @@ class Button {
 	int ypos;
 	int width;
 	int height;
-	int red;
-	int green;
-	int blue;
 	SDL_Texture* currentTexture;
 	int id;
 
@@ -54,32 +51,20 @@ class Button {
 		ypos = 0;
 		width = 0;
 		height = 0;
-		red = 0;
-		green = 0;
-		blue = 0;
 		currentTexture = NULL;
 		id = 0;
 	}
 	
-	void init(int x, int y, int w, int h, int r, int g, int b, int num) {
+	void init(int x, int y, int w, int h, int num) {
 		xpos = x;
 		ypos = y;
 		width = w;
 		height = h;
-		red = r;
-		green = g;
-		blue = b;
 		id = num;
 	}
 	
 	void loadTexture(SDL_Texture* textureToLoad) {
 		currentTexture = textureToLoad;
-	}
-	
-	void render() {
-		SDL_Rect fillRect = {xpos, ypos, width, height};
-		SDL_SetRenderDrawColor(renderer, red, green, blue, 0xFF);
-		SDL_RenderFillRect(renderer, &fillRect);
 	}
 	
 	void displayTexture() {
@@ -88,89 +73,38 @@ class Button {
 	}
 	
 	void handleEvent(SDL_Event* e) {
-		// if mouse event happened
-		if (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP) {
+		// only a mouse-button press does anything (hover had no visual effect)
+		if (e->type == SDL_MOUSEBUTTONDOWN) {
 			// get mouse position
 			int x, y;
 			SDL_GetMouseState(&x, &y);
-			
-			// check if mouse is in button
+
+			// check if the click landed inside the button
 			bool inside = true;
-			
+
 			// if mouse is left of the button
 			if (x < xpos) {
 				inside = false;
 			}
-			
+
 			// if mouse is right of the button
 			else if (x > xpos + width) {
 				inside = false;
 			}
-			
+
 			// if mouse is above the button
 			else if (y < ypos) {
 				inside = false;
 			}
-			
+
 			// if mouse is below the button
 			else if (y > ypos + height) {
 				inside = false;
 			}
-			
-			// mouse is outside button
-			if (!inside) {
-				if (red > 0) {
-					red = 250;
-				}
-				if (green > 0) {
-					green = 250;
-				}
-				if (blue > 0) {
-					blue = 250;
-				}
-			}
-			
-			// mouse is inside button
-			else {
-				// set mouse over sprite
-				switch (e->type) {
-					case SDL_MOUSEMOTION:
-						if (red > 0) {
-							red = 200;
-						}
-						if (green > 0) {
-							green = 200;
-						}
-						if (blue > 0) {
-							blue = 200;
-						}
-						break;
-						
-					case SDL_MOUSEBUTTONDOWN:
-						if (red > 0) {
-							red = 255;
-						}
-						if (green > 0) {
-							green = 255;
-						}
-						if (blue > 0) {
-							blue = 255;
-						}
-						changeDisplay(id);
-						break;
-					
-					case SDL_MOUSEBUTTONUP:
-						if (red > 0) {
-							red = 200;
-						}
-						if (green > 0) {
-							green = 200;
-						}
-						if (blue > 0) {
-							blue = 200;
-						}
-						break;
-				}
+
+			// dispatch the click
+			if (inside) {
+				changeDisplay(id);
 			}
 		}
 	}
@@ -917,31 +851,31 @@ void init() {
 	int middleY = SCREEN_HEIGHT/2 - 50;
 	
     // initialize buttons
-	zero.init(middleX, middleY + 250, 100, 100, 150, 0, 0x00, 0);
-	one.init(middleX - 125, middleY + 125, 100, 100, 0x00, 150, 150, 1);
-	two.init(middleX, middleY + 125, 100, 100, 0x00, 150, 0x00, 2);
-	three.init(middleX + 125, middleY + 125, 100, 100, 0x00, 150, 0x00, 3);
-	four.init(middleX - 125, middleY, 100, 100, 0x00, 150, 0x00, 4);
-	five.init(middleX, middleY, 100, 100, 0x00, 0, 150, 5);
-	six.init(middleX + 125, middleY, 100, 100, 0x00, 150, 0x00, 6);
-	seven.init(middleX - 125, middleY - 125, 100, 100, 0x00, 150, 0x00, 7);
-	eight.init(middleX, middleY - 125, 100, 100, 0x00, 150, 0x00, 8);
-	nine.init(middleX + 125, middleY - 125, 100, 100, 0x00, 150, 0x00, 9);
+	zero.init(middleX, middleY + 250, 100, 100, 0);
+	one.init(middleX - 125, middleY + 125, 100, 100, 1);
+	two.init(middleX, middleY + 125, 100, 100, 2);
+	three.init(middleX + 125, middleY + 125, 100, 100, 3);
+	four.init(middleX - 125, middleY, 100, 100, 4);
+	five.init(middleX, middleY, 100, 100, 5);
+	six.init(middleX + 125, middleY, 100, 100, 6);
+	seven.init(middleX - 125, middleY - 125, 100, 100, 7);
+	eight.init(middleX, middleY - 125, 100, 100, 8);
+	nine.init(middleX + 125, middleY - 125, 100, 100, 9);
 
-	minusSign.init(middleX + 250, middleY, 100, 100, 0x00, 150, 0x00, 10);
-	plusSign.init(middleX + 250, middleY + 125, 100, 100, 0x00, 150, 0x00, 11);
-	multiply.init(middleX + 250, middleY - 125, 100, 100, 0x00, 150, 0x00, 12);
+	minusSign.init(middleX + 250, middleY, 100, 100, 10);
+	plusSign.init(middleX + 250, middleY + 125, 100, 100, 11);
+	multiply.init(middleX + 250, middleY - 125, 100, 100, 12);
 
-	displayOne.init(middleX - 300, middleY - 250, 100, 100, 0x00, 150, 0x00, 13);
-	displayTwo.init(middleX - 200, middleY - 250, 100, 100, 0x00, 150, 0x00, 14);
-	displayThree.init(middleX - 100, middleY - 250, 100, 100, 0x00, 150, 0x00, 15);
-	displayFour.init(middleX, middleY - 250, 100, 100, 0x00, 150, 0x00, 16);
-	displayFive.init(middleX + 100, middleY - 250, 100, 100, 0x00, 150, 0x00, 17);
-	displaySix.init(middleX + 200, middleY - 250, 100, 100, 0x00, 150, 0x00, 18);
-	displaySeven.init(middleX + 300, middleY - 250, 100, 100, 0x00, 150, 0x00, 19);
+	displayOne.init(middleX - 300, middleY - 250, 100, 100, 13);
+	displayTwo.init(middleX - 200, middleY - 250, 100, 100, 14);
+	displayThree.init(middleX - 100, middleY - 250, 100, 100, 15);
+	displayFour.init(middleX, middleY - 250, 100, 100, 16);
+	displayFive.init(middleX + 100, middleY - 250, 100, 100, 17);
+	displaySix.init(middleX + 200, middleY - 250, 100, 100, 18);
+	displaySeven.init(middleX + 300, middleY - 250, 100, 100, 19);
 	
-	clear.init(middleX - 250, middleY - 125, 100, 100, 0x00, 150, 0x00, 20);
-	equalsSign.init(middleX + 250, middleY + 250, 100, 100, 0x00, 150, 0x00, 21);
+	clear.init(middleX - 250, middleY - 125, 100, 100, 20);
+	equalsSign.init(middleX + 250, middleY + 250, 100, 100, 21);
 }
 
 void loadMedia() {
