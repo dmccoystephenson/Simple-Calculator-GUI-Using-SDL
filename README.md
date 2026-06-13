@@ -57,9 +57,9 @@ and prints the parsed result:
 
 These are tracked as open issues:
 
-- The equals button does not yet evaluate the equation (issue #1).
-- `testingParsing.cpp`'s `parseEquation` is currently a stub with no return
-  (issue #11).
+- The equals button does not yet evaluate the equation (issue #1). Note the
+  standalone equation parser in `testingParsing.cpp` is implemented and
+  working; it is just not yet wired into the GUI's equals button.
 
 See the [issue tracker](https://github.com/dmccoystephenson/Simple-Calculator-GUI-Using-SDL/issues)
 for the full list.
